@@ -10,6 +10,7 @@ public class CustomLinkedList<T> {
         Node<T> next;
         Node<T> prev;
         T value;
+
         Node(T value) {
             this.value = value;
         }
@@ -31,8 +32,7 @@ public class CustomLinkedList<T> {
         Node<T> node = new Node<>(value);
         if (this.first == null) {
             first = node;
-        }
-        else {
+        } else {
             last.next = node;
             node.prev = last;
         }
@@ -44,8 +44,7 @@ public class CustomLinkedList<T> {
         Node<T> node = new Node<>(value);
         if (this.last == null) {
             last = node;
-        }
-        else {
+        } else {
             first.prev = node;
         }
         node.next = first;
@@ -66,8 +65,7 @@ public class CustomLinkedList<T> {
         if (current == last) {
             node.next = null;
             last = node;
-        }
-        else {
+        } else {
             node.next = current.next;
             current.next.prev = node;
         }
@@ -83,7 +81,7 @@ public class CustomLinkedList<T> {
 
         T value = get(index);
         Node<T> current = this.first;
-        while (index > 0){
+        while (index > 0) {
             index--;
             current = current.next;
             if (current == null) {
@@ -92,15 +90,13 @@ public class CustomLinkedList<T> {
         }
         if (current.prev != null) {
             current.prev.next = current.next;
-        }
-        else {
+        } else {
             this.first = current.next;
         }
 
         if (current.next != null) {
             current.next.prev = current.prev;
-        }
-        else {
+        } else {
             this.last = current.prev;
         }
         current.next = null;
@@ -146,7 +142,7 @@ public class CustomLinkedList<T> {
             throw new IndexOutOfBoundsException("Index out of bounds: " + index);
         }
         Node<T> current = this.first;
-        while (index > 0){
+        while (index > 0) {
             index--;
             current = current.next;
             if (current == null) {
@@ -203,6 +199,33 @@ public class CustomLinkedList<T> {
         while (current != null) {
             action.accept(current.value);
             current = current.next;
+        }
+    }
+
+    public CustomIterator<T> iterator() {
+        return new CustomLinkedListIterator();
+    }
+
+    private class CustomLinkedListIterator implements CustomIterator<T> {
+        private Node<T> current = first;
+        @Override
+        public boolean hasNext() {
+            return current != null;
+        }
+
+        @Override
+        public T next() throws NoSuchFieldException {
+            if (!hasNext()) {
+                throw new NoSuchFieldException("End of list");
+            }
+            T val = current.value;
+            current = current.next;
+            return val;
+        }
+
+        @Override
+        public void forEachRemaining(Consumer<? super T> action) throws NoSuchFieldException {
+            CustomIterator.super.forEachRemaining(action);
         }
     }
 }
