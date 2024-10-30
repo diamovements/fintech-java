@@ -1,8 +1,10 @@
 package org.example.dao;
 
+import org.example.init.Subscriber;
+
 import java.util.Collection;
 
-public interface UniversalDatabase<K, V> {
+public interface UniversalDatabase<K, V>{
 
     public void put(K key, V value);
 
@@ -13,4 +15,5 @@ public interface UniversalDatabase<K, V> {
     public Collection<V> getAll();
 
     public void update(K key, V value);
+
 }

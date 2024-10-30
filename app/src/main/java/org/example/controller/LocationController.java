@@ -24,6 +24,7 @@ import java.util.Collection;
 public class LocationController {
 
     private final LocationService locationService;
+
     @DeleteMapping("/{slug}")
     public void deleteLocation(@PathVariable("slug") String slug) {
         log.info("Deleting location: {}", slug);
@@ -52,5 +53,15 @@ public class LocationController {
     @GetMapping("/{slug}")
     public Location getLocation(@PathVariable("slug") String slug) {
         return locationService.getLocation(slug);
+    }
+
+    @PostMapping("/undo/{slug}")
+    public ResponseEntity<Location> undoChanges(@PathVariable("slug") String slug) {
+        try {
+            Location restored = locationService.undoLastChange(slug);
+            return ResponseEntity.ok(restored);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(null);
+        }
     }
 }

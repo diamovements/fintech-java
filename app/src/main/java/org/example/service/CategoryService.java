@@ -3,6 +3,8 @@ package org.example.service;
 import lombok.RequiredArgsConstructor;
 import org.example.dao.UniversalDatabase;
 import org.example.entity.Category;
+import org.example.memento.CategoryHistory;
+import org.example.memento.CategorySnapshot;
 import org.springframework.stereotype.Service;
 import java.util.Collection;
 import java.util.Optional;
@@ -12,6 +14,8 @@ import java.util.Optional;
 public class CategoryService {
 
     private final UniversalDatabase<Integer, Category> db;
+    private final CategoryHistory history = new CategoryHistory();
+
 
     public Category getCategory(int categoryId) {
         Optional<Category> category = Optional.ofNullable(db.get(categoryId));
@@ -25,6 +29,7 @@ public class CategoryService {
     public void deleteCategory(int categoryId) {
         Optional<Category> category = Optional.ofNullable(db.get(categoryId));
         category.orElseThrow(() -> new IllegalArgumentException(String.valueOf(categoryId)));
+        history.save(new CategorySnapshot(category.get()));
         db.remove(categoryId);
     }
 
@@ -33,6 +38,15 @@ public class CategoryService {
     }
 
     public void updateCategory(int categoryId, Category category) {
+        Optional<Category> existingCategory = Optional.ofNullable(db.get(categoryId));
+        existingCategory.ifPresent(c -> history.save(new CategorySnapshot(c)));
         db.update(categoryId, category);
+    }
+
+    public Category undoLastChange(int categoryId) {
+        CategorySnapshot lastSnapshot = history.lastSnapshot();
+        Category restoredCategory = lastSnapshot.restore();
+        db.update(categoryId, restoredCategory);
+        return restoredCategory;
     }
 }

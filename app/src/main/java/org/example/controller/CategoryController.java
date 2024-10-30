@@ -3,6 +3,7 @@ package org.example.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.entity.Category;
+import org.example.entity.Location;
 import org.example.service.CategoryService;
 import org.example.timing.Timing;
 import org.springframework.http.ResponseEntity;
@@ -53,5 +54,15 @@ public class CategoryController {
     @GetMapping("/{id}")
     public Category getCategory(@PathVariable("id") int categoryId) {
         return categoryService.getCategory(categoryId);
+    }
+
+    @PostMapping("/undo/{id}")
+    public ResponseEntity<Category> undoChanges(@PathVariable("id") int id) {
+        try {
+            Category restored = categoryService.undoLastChange(id);
+            return ResponseEntity.ok(restored);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(null);
+        }
     }
 }

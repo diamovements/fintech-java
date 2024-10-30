@@ -1,12 +1,13 @@
 package org.example.dao;
 
 import org.example.entity.Category;
+import org.example.init.Subscriber;
 import org.springframework.stereotype.Component;
 import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
-public class CategoryDatabase implements UniversalDatabase<Integer, Category> {
+public class CategoryDatabase implements UniversalDatabase<Integer, Category>, Subscriber<Category> {
 
     private final ConcurrentHashMap<Integer, Category> db = new ConcurrentHashMap<>();
     @Override
@@ -32,5 +33,10 @@ public class CategoryDatabase implements UniversalDatabase<Integer, Category> {
     @Override
     public void update(Integer key, Category value) {
         db.replace(key, value);
+    }
+
+    @Override
+    public void update(Category data) {
+        put(data.getId(), data);
     }
 }
