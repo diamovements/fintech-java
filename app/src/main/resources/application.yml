@@ -1,0 +1,41 @@
+spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: karinaabdu6@gmail.com
+    password: "pwkotchqzliqgsco"
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls.enable: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/fintech9
+    username: postgres
+    password: 111
+    driver-class-name: org.postgresql.Driver
+  liquibase:
+    drop-first: true
+    enabled: true
+    change-log: classpath:/db/changelog/db.changelog-master.xml
+    default-schema: public
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    generate-ddl: true
+    database: POSTGRESQL
+    hibernate:
+      ddl-auto: update
+  url:
+    place: "https://kudago.com/public-api/v1.4/locations"
+logging:
+  level:
+    root: INFO
+security:
+  jwt:
+    secret: "f58e49672b17942765a058e3a8723599ea89857edfff555bf3ff026a966ef34f"
+    exp-remember: 2592000000
+    exp-noremember: 600000
+    reset: "1111"
+

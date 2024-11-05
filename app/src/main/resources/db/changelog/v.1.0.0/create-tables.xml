@@ -1,0 +1,48 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="create-table-places" author="me">
+        <createTable tableName="places">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="slug" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create-table-events" author="me">
+        <createTable tableName="events">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="title" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="start_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="end_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="place_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="add-foreign-key-constraint" author="me">
+        <addForeignKeyConstraint baseColumnNames="place_id"
+                                 baseTableName="events"
+                                 constraintName="fk_event_place"
+                                 referencedColumnNames="id"
+                                 referencedTableName="places"
+                                 onDelete="CASCADE"/>
+    </changeSet>
+
+</databaseChangeLog>
