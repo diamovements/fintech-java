@@ -1,4 +1,4 @@
 package org.example.entity.request;
 
-public record SignInRequest(String username, String password, boolean remember) {
+public record SignInRequest(String email, String password, boolean remember) {
 }

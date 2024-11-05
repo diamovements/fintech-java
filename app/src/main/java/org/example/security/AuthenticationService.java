@@ -24,30 +24,24 @@ public class AuthenticationService {
     @Transactional
     public AuthenticationResponse signUp(SignUpRequest request) {
         UserEntity user = UserEntity.builder()
-                .username(request.username())
-                .role("USER")
+                .email(request.email())
+                .role("ROLE_USER")
                 .password(passwordEncoder.encode(request.password()))
                 .build();
         user = userRepository.save(user);
         log.info("User saved: {}", user.getUsername());
-
         String token = jwtService.generateToken(user, false);
-
         return new AuthenticationResponse(token);
     }
 
     @Transactional
     public AuthenticationResponse signIn(SignInRequest request) {
         authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.username(), request.password()));
-
-        UserEntity user = userRepository.findByUsername(request.username())
+                new UsernamePasswordAuthenticationToken(request.email(), request.password()));
+        UserEntity user = userRepository.findByEmail(request.email())
                 .orElseThrow(() -> new IllegalArgumentException("Неверный пароль или почта"));
-
         log.info("User role: {}", user.getRole());
-
         String token = jwtService.generateToken(user, request.remember());
-
         return new AuthenticationResponse(token);
     }
 

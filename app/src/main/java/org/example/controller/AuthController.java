@@ -1,11 +1,13 @@
 package org.example.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.example.entity.request.ConfirmResetRequest;
+import org.example.entity.request.ResetPasswordRequest;
 import org.example.entity.request.SignInRequest;
 import org.example.entity.request.SignUpRequest;
 import org.example.entity.response.AuthenticationResponse;
 import org.example.security.AuthenticationService;
-import org.example.service.UserService;
+import org.example.service.PasswordResetService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/auth")
 public class AuthController {
     private final AuthenticationService authenticationService;
+    private final PasswordResetService passwordResetService;
 
     @PostMapping("/signup")
     public void signUp(@RequestBody SignUpRequest request) {
@@ -35,5 +38,13 @@ public class AuthController {
         return ResponseEntity.ok("Logout successful");
     }
 
+    @PostMapping("/reset-password/request")
+    public void requestReset(@RequestBody ResetPasswordRequest request) {
+        passwordResetService.requestReset(request.email());
+    }
 
+    @PostMapping("/reset-password/confirm")
+    public void confirmReset(@RequestBody ConfirmResetRequest request) {
+        passwordResetService.confirmReset(request.email(), request.code(), request.newPassword());
+    }
 }
