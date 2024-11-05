@@ -15,7 +15,6 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     generate-ddl: true
     database: POSTGRESQL
-    show-sql: true
     hibernate:
       ddl-auto: update
   url:
@@ -23,3 +22,8 @@ spring:
 logging:
   level:
     root: INFO
+security:
+  jwt:
+    secret: "f58e49672b17942765a058e3a8723599ea89857edfff555bf3ff026a966ef34f"
+    exp-remember: 2592000000
+    exp-noremember: 600000
