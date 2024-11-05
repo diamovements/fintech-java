@@ -1,9 +1,9 @@
 package org.example.service;
 
 import lombok.RequiredArgsConstructor;
+import org.example.config.History;
 import org.example.dao.UniversalDatabase;
 import org.example.entity.Category;
-import org.example.memento.CategoryHistory;
 import org.example.memento.CategorySnapshot;
 import org.springframework.stereotype.Service;
 import java.util.Collection;
@@ -14,7 +14,7 @@ import java.util.Optional;
 public class CategoryService {
 
     private final UniversalDatabase<Integer, Category> db;
-    private final CategoryHistory history = new CategoryHistory();
+    private final History<CategorySnapshot> history = new History<>();
 
 
     public Category getCategory(int categoryId) {
@@ -44,7 +44,7 @@ public class CategoryService {
     }
 
     public Category undoLastChange(int categoryId) {
-        CategorySnapshot lastSnapshot = history.lastSnapshot();
+        CategorySnapshot lastSnapshot = history.lastSnapshot().orElseThrow(() -> new IllegalArgumentException("No changes to undo"));
         Category restoredCategory = lastSnapshot.restore();
         db.update(categoryId, restoredCategory);
         return restoredCategory;

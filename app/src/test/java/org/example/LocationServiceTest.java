@@ -2,6 +2,7 @@ package org.example;
 
 import org.example.dao.LocationDatabase;
 import org.example.dao.UniversalDatabase;
+import org.example.entity.Category;
 import org.example.entity.Location;
 import org.example.service.LocationService;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -61,5 +62,18 @@ public class LocationServiceTest {
     @Test
     void deleteLocation_shouldThrowException() {
         assertThrows(IllegalArgumentException.class, () -> locationService.deleteLocation("ast"));
+    }
+
+    @Test
+    void undoLastChange_shouldUndoLastChange() {
+        Location location = new Location("msk", "Москва");
+        locationService.addLocation(location.getSlug(), location);
+        locationService.updateLocation("msk", new Location("msk", "Московская область"));
+        assertEquals("Москва", locationService.undoLastChange("msk").getName());
+    }
+
+    @Test
+    void undoLastChange_shouldThrowException() {
+        assertThrows(IllegalArgumentException.class, () -> locationService.undoLastChange("ekb"));
     }
 }

@@ -63,4 +63,17 @@ public class CategoryServiceTest {
     void deleteCategory_shouldThrowException() {
         assertThrows(IllegalArgumentException.class, () -> categoryService.deleteCategory(133));
     }
+
+    @Test
+    void undoLastChange_shouldUndoLastChange() {
+        Category category1 = new Category(1, "food", "Еда");
+        categoryService.addCategory(category1.getId(), category1);
+        categoryService.updateCategory(1, new Category(1, "inn", "Отели"));
+        assertEquals("Еда", categoryService.undoLastChange(1).getName());
+    }
+
+    @Test
+    void undoLastChange_shouldThrowException() {
+        assertThrows(IllegalArgumentException.class, () -> categoryService.undoLastChange(133));
+    }
 }

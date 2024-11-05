@@ -2,11 +2,10 @@ package org.example.memento;
 
 import lombok.Getter;
 import org.example.entity.Location;
-
 import java.time.LocalDateTime;
 
 @Getter
-public class LocationSnapshot {
+public class LocationSnapshot implements Snapshot<Location>{
     private final String slug;
     private final String name;
     private final LocalDateTime timestamp;
@@ -17,6 +16,7 @@ public class LocationSnapshot {
         this.timestamp = LocalDateTime.now();
     }
 
+    @Override
     public Location restore() {
         Location location = new Location();
         location.setSlug(this.slug);

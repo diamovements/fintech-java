@@ -1,9 +1,9 @@
 package org.example.service;
 
 import lombok.RequiredArgsConstructor;
+import org.example.config.History;
 import org.example.dao.UniversalDatabase;
 import org.example.entity.Location;
-import org.example.memento.LocationHistory;
 import org.example.memento.LocationSnapshot;
 import org.springframework.stereotype.Service;
 import java.util.Collection;
@@ -14,7 +14,7 @@ import java.util.Optional;
 public class LocationService {
 
     private final UniversalDatabase<String, Location> db;
-    private final LocationHistory history = new LocationHistory();
+    private final History<LocationSnapshot> history = new History<>();
 
     public Location getLocation(String slug) {
         Optional<Location> location = Optional.ofNullable(db.get(slug));
@@ -43,7 +43,7 @@ public class LocationService {
     }
 
     public Location undoLastChange(String slug) {
-        LocationSnapshot lastSnapshot = history.lastSnapshot();
+        LocationSnapshot lastSnapshot = history.lastSnapshot().orElseThrow(() -> new IllegalArgumentException("No changes to undo"));
         Location restoredLocation = lastSnapshot.restore();
         db.update(slug, restoredLocation);
         return restoredLocation;
