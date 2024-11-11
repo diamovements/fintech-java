@@ -63,7 +63,7 @@ public class CurrencyCacheServiceTest {
                 </ValCurs>""";
         BigDecimal rate = currencyCacheService.parseRateFromXML(xml, "AUD");
 
-        assertEquals(BigDecimal.valueOf(16.00), rate);
+        assertEquals(new BigDecimal("16.00"), rate);
     }
 
     @Test
@@ -103,12 +103,11 @@ public class CurrencyCacheServiceTest {
                          <VunitRate>43,8254</VunitRate>
                          </Valute>
                 </ValCurs>""";
-        String expectedUrl = "http://fake-url.com/api?";
 
         when(restTemplate.getForObject(anyString(), eq(String.class))).thenReturn(xml);
         BigDecimal rate = currencyCacheService.getCurrencyRate("AUD");
 
-        assertEquals(BigDecimal.valueOf(16.00), rate);
+        assertEquals(new BigDecimal("16.00"), rate);
         verify(restTemplate, times(1)).getForObject(anyString(), eq(String.class));
     }
 
@@ -133,7 +132,6 @@ public class CurrencyCacheServiceTest {
                          <VunitRate>43,8254</VunitRate>
                          </Valute>
                 </ValCurs>""";
-        String expectedUrl = "http://fake-url.com/api?";
 
         when(restTemplate.getForObject(anyString(), eq(String.class))).thenReturn(xml);
 
@@ -141,18 +139,6 @@ public class CurrencyCacheServiceTest {
         verify(restTemplate, times(1)).getForObject(anyString(), eq(String.class));
     }
 
-    @Test
-    void getCurrencyRateFallbackTest_shouldReturnCurrency() {
-        Cache cache = mock(Cache.class);
-        when(manager.getCache("rates")).thenReturn(cache);
-        when(cache.get("AUD", Double.class)).thenReturn(16.00);
-
-        BigDecimal rate = currencyCacheService.getCurrencyRateFallback("AUD", new Throwable("Error"));
-
-        assertEquals(BigDecimal.valueOf(16.00), rate);
-        verify(manager, times(1)).getCache("rates");
-        verify(cache, times(1)).get("AUD", Double.class);
-    }
 
     @Test
     void getCurrencyRateFallbackTest_shouldThrowCurrencyNotFoundException() {

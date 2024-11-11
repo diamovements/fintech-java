@@ -38,7 +38,7 @@ public class CurrencyControllerTest {
         when(currencyService.convertCurrency(request.amount(), request.fromCurrency(), request.toCurrency())).thenReturn(BigDecimal.valueOf(50.0));
         mockMvc.perform(post("/currencies/convert")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{ \"fromCurrency\": \"USD\", \"toCurrency\": \"EUR\", \"convertedAmount\": 50.0 }"))
+                .content("{ \"fromCurrency\": \"USD\", \"toCurrency\": \"EUR\", \"amount\": 50.0 }"))
                 .andExpect(status().isOk());
     }
 
@@ -56,7 +56,7 @@ public class CurrencyControllerTest {
         doThrow(new CurrencyNotFoundException("Currency not found")).when(currencyService).convertCurrency(any(), any(), any());
         mockMvc.perform(post("/currencies/convert")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{ \"fromCurrency\": \"RUB\", \"toCurrency\": \"EUR\", \"convertedAmount\": 50.0 }"))
+                .content("{ \"fromCurrency\": \"RUB\", \"toCurrency\": \"ADC\", \"amount\": 50.0 }"))
                 .andExpect(status().isNotFound());
     }
 
