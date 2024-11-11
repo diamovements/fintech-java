@@ -17,6 +17,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '19'
+          distribution: 'temurin'
 
       - name: Build with Gradle
         run: ./gradlew build
@@ -33,6 +34,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '19'
+          distribution: 'temurin'
 
       - name: Run tests with coverage
         run: ./gradlew test jacocoTestReport
@@ -55,6 +57,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '19'
+          distribution: 'temurin'
 
       - name: Run Checkstyle
         run: ./gradlew checkstyleMain
