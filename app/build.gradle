@@ -63,3 +63,7 @@ checkstyle {
 checkstyleMain {
     source ='src/main/java'
 }
+
+checkstyleTest {
+    source ='src/main/test'
+}

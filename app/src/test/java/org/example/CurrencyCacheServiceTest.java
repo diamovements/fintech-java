@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import java.math.BigDecimal;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -59,9 +61,9 @@ public class CurrencyCacheServiceTest {
                          <VunitRate>43,8254</VunitRate>
                          </Valute>
                 </ValCurs>""";
-        Double rate = currencyCacheService.parseRateFromXML(xml, "AUD");
+        BigDecimal rate = currencyCacheService.parseRateFromXML(xml, "AUD");
 
-        assertEquals(16.00, rate);
+        assertEquals(BigDecimal.valueOf(16.00), rate);
     }
 
     @Test
@@ -104,9 +106,9 @@ public class CurrencyCacheServiceTest {
         String expectedUrl = "http://fake-url.com/api?";
 
         when(restTemplate.getForObject(anyString(), eq(String.class))).thenReturn(xml);
-        Double rate = currencyCacheService.getCurrencyRate("AUD", restTemplate, expectedUrl);
+        BigDecimal rate = currencyCacheService.getCurrencyRate("AUD");
 
-        assertEquals(16.00, rate);
+        assertEquals(BigDecimal.valueOf(16.00), rate);
         verify(restTemplate, times(1)).getForObject(anyString(), eq(String.class));
     }
 
@@ -135,7 +137,7 @@ public class CurrencyCacheServiceTest {
 
         when(restTemplate.getForObject(anyString(), eq(String.class))).thenReturn(xml);
 
-        assertThrows(RuntimeException.class,() -> currencyCacheService.getCurrencyRate("RUB", restTemplate, expectedUrl));
+        assertThrows(RuntimeException.class,() -> currencyCacheService.getCurrencyRate("RUB"));
         verify(restTemplate, times(1)).getForObject(anyString(), eq(String.class));
     }
 
@@ -145,9 +147,9 @@ public class CurrencyCacheServiceTest {
         when(manager.getCache("rates")).thenReturn(cache);
         when(cache.get("AUD", Double.class)).thenReturn(16.00);
 
-        Double rate = currencyCacheService.getCurrencyRateFallback("AUD", new Throwable("Error"));
+        BigDecimal rate = currencyCacheService.getCurrencyRateFallback("AUD", new Throwable("Error"));
 
-        assertEquals(16.00, rate);
+        assertEquals(BigDecimal.valueOf(16.00), rate);
         verify(manager, times(1)).getCache("rates");
         verify(cache, times(1)).get("AUD", Double.class);
     }
@@ -170,7 +172,7 @@ public class CurrencyCacheServiceTest {
                 .thenThrow(HttpServerErrorException.ServiceUnavailable.create(HttpStatusCode.valueOf(503), "Service Unavailable", null, null, null));
 
         assertThrows(CurrencyServiceUnavailableException.class, () -> {
-            currencyCacheService.getCurrencyRate(code, restTemplate, apiUrl);
+            currencyCacheService.getCurrencyRate(code);
         });
     }
 }

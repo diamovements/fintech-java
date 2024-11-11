@@ -42,7 +42,7 @@ public class CurrencyCacheService {
         }
     }
 
-    private BigDecimal getCurrencyRateFallback(String code, Throwable throwable) {
+    public BigDecimal getCurrencyRateFallback(String code, Throwable throwable) {
         log.error("Error occurred while getting currency: {}, {}", code, throwable.getMessage());
 
         BigDecimal rateTry = Objects.requireNonNull(manager.getCache("rates")).get(code, BigDecimal.class);

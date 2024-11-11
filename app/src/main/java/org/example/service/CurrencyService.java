@@ -21,7 +21,6 @@ import java.util.Set;
 @Setter
 public class CurrencyService {
 
-    private final RestTemplate restTemplate;
     private final CurrencyCacheService cacheService;
     private final Set<Currency> currencies = Currency.getAvailableCurrencies();
 

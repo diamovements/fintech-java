@@ -11,6 +11,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.math.BigDecimal;
+
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -32,8 +34,8 @@ public class CurrencyControllerTest {
 
     @Test
     void convertCurrenciesTest_shouldConvertCurrency() throws Exception {
-        ConvertRequest request = new ConvertRequest("USD", "EUR", 100.0);
-        when(currencyService.convertCurrency(request.amount(), request.fromCurrency(), request.toCurrency())).thenReturn(50.0);
+        ConvertRequest request = new ConvertRequest("USD", "EUR", BigDecimal.valueOf(100.0));
+        when(currencyService.convertCurrency(request.amount(), request.fromCurrency(), request.toCurrency())).thenReturn(BigDecimal.valueOf(50.0));
         mockMvc.perform(post("/currencies/convert")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{ \"fromCurrency\": \"USD\", \"toCurrency\": \"EUR\", \"convertedAmount\": 50.0 }"))
@@ -60,7 +62,7 @@ public class CurrencyControllerTest {
 
     @Test
     void getRateTest_shouldReturnRate() throws Exception {
-        when(currencyService.getCurrencyRate("USD")).thenReturn(100.0);
+        when(currencyService.getCurrencyRate("USD")).thenReturn(BigDecimal.valueOf(100.0));
         mockMvc.perform(get("/currencies/rates/USD"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.amount").value(100.0));
