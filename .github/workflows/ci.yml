@@ -39,6 +39,9 @@ jobs:
           java-version: '19'
           distribution: 'temurin'
 
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
       - name: Run tests with coverage
         run: ./gradlew test jacocoTestReport
 
@@ -61,6 +64,9 @@ jobs:
         with:
           java-version: '19'
           distribution: 'temurin'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
 
       - name: Run Checkstyle
         run: ./gradlew checkstyleMain
