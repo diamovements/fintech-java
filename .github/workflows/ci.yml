@@ -94,7 +94,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ghcr.io/${{ github.repository }}/app:latest .
+          docker build -f app/Dockerfile -t ghcr.io/${{ github.repository }}/app:latest .
           docker tag ghcr.io/${{ github.repository }}/app:latest ghcr.io/${{ github.repository }}/app:${{ github.sha }}
 
       - name: Push Docker image
