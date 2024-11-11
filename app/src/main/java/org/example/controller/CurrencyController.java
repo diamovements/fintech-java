@@ -34,21 +34,21 @@ public class CurrencyController {
 
 
     @Operation(summary = "Get currency rate by its code",
-    description = "Fetching exchange rate for given code.")
+        description = "Fetching exchange rate for given code.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully fetched currency rate",
+        @ApiResponse(responseCode = "200", description = "Successfully fetched currency rate",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = RateResponse.class))),
-            @ApiResponse(responseCode = "400", description = "Invalid currency code",
+        @ApiResponse(responseCode = "400", description = "Invalid currency code",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = ErrorResponse.class))),
-            @ApiResponse(responseCode = "404", description = "Currency not found",
+        @ApiResponse(responseCode = "404", description = "Currency not found",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = ErrorResponse.class))),
-            @ApiResponse(responseCode = "500", description = "Internal server error",
+        @ApiResponse(responseCode = "500", description = "Internal server error",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = ErrorResponse.class))),
-            @ApiResponse(responseCode = "503", description = "Service unavailable",
+        @ApiResponse(responseCode = "503", description = "Service unavailable",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = ErrorResponse.class)))
     })
@@ -59,19 +59,19 @@ public class CurrencyController {
 
     @Operation(summary = "Convert currency by request", description = "Converting currency from one code to another.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully converted currency",
+        @ApiResponse(responseCode = "200", description = "Successfully converted currency",
                     content = @Content(mediaType = "application/json",
                         schema = @Schema(implementation = ConvertResponse.class))),
-            @ApiResponse(responseCode = "400", description = "Invalid currency code",
+        @ApiResponse(responseCode = "400", description = "Invalid currency code",
                     content = @Content(mediaType = "application/json",
                         schema = @Schema(implementation = ErrorResponse.class))),
-            @ApiResponse(responseCode = "404", description = "Currency not found",
+        @ApiResponse(responseCode = "404", description = "Currency not found",
                     content = @Content(mediaType = "application/json",
                         schema = @Schema(implementation = ErrorResponse.class))),
-            @ApiResponse(responseCode = "500", description = "Internal server error",
+        @ApiResponse(responseCode = "500", description = "Internal server error",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = ErrorResponse.class))),
-            @ApiResponse(responseCode = "503", description = "Service unavailable",
+        @ApiResponse(responseCode = "503", description = "Service unavailable",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = ErrorResponse.class)))
     })
