@@ -1,0 +1,17 @@
+dontinline,*.*_all_jmhStub
+dontinline,*.*_avgt_jmhStub
+dontinline,*.*_sample_jmhStub
+dontinline,*.*_ss_jmhStub
+dontinline,*.*_thrpt_jmhStub
+inline,org/example/jmh2/loadAndMultiple/RabbitTest.setUp
+inline,org/example/jmh2/loadAndMultiple/RabbitTest.tearDown
+inline,org/example/jmh2/loadAndMultiple/RabbitTest.testProducerConsumer
+inline,org/example/jmh2/loadBalancing/RabbitTest.setUp
+inline,org/example/jmh2/loadBalancing/RabbitTest.tearDown
+inline,org/example/jmh2/loadBalancing/RabbitTest.testProducerConsumer
+inline,org/example/jmh2/multipleConsumers/RabbitTest.setUp
+inline,org/example/jmh2/multipleConsumers/RabbitTest.tearDown
+inline,org/example/jmh2/multipleConsumers/RabbitTest.testProducerConsumer
+inline,org/example/jmh2/stress/RabbitTest.setUp
+inline,org/example/jmh2/stress/RabbitTest.tearDown
+inline,org/example/jmh2/stress/RabbitTest.testProducerConsumer
