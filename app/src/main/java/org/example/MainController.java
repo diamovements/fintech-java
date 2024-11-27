@@ -34,30 +34,12 @@ public class MainController {
     }
 
     @GetMapping("/overflow")
-    public ResponseEntity<String> triggerStackOverflow() {
-        try {
-            causeStackOverflow();
-        } catch (StackOverflowError e) {
-            log.error("Caught StackOverflowError: {}", e.getMessage());
-        }
-        return ResponseEntity.ok("Stack overflow error");
-    }
-
-    private void causeStackOverflow() {
-        causeStackOverflow();
+    public void triggerStackOverflow() {
+        triggerStackOverflow();
     }
 
     @GetMapping("/memory")
-    public ResponseEntity<String> triggerOutOfMemory() {
-        try {
-            causeOutOfMemory();
-        } catch (OutOfMemoryError e) {
-            log.error("Caught OutOfMemoryError: {}", e.getMessage());
-        }
-        return ResponseEntity.ok("Out of memory error");
-    }
-
-    private void causeOutOfMemory() {
+    public void triggerOutOfMemory() {
         List<Object> list = new ArrayList<>();
         while (true) {
             list.add(new byte[1024 * 1024]);
