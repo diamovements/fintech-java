@@ -1,1 +1,2 @@
-# fintech-lesson-1
+# fintech-java
+Домашние задания с курса Финтех Java-разработчик
