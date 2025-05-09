@@ -1,0 +1,17 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/public-api/v1.4/place-categories"
+      },
+      "response": {
+        "status": 200,
+        "body": "[{\"id\":123,\"slug\":\"airports\",\"name\":\"Аэропорты\"},{\"id\":89,\"slug\":\"amusement\",\"name\":\"Развлечения\"},{\"id\":114,\"slug\":\"animal-shelters\",\"name\":\"Питомники\"}]",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    }
+  ]
+}

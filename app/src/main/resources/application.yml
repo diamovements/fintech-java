@@ -1,0 +1,7 @@
+spring:
+  url:
+    category: "https://kudago.com/public-api/v1.4/place-categories"
+    location: "https://kudago.com/public-api/v1.4/locations"
+logging:
+  level:
+    root: INFO
