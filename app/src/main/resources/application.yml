@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/fintech9
+    username: postgres
+    password: 111
+    driver-class-name: org.postgresql.Driver
+  liquibase:
+    drop-first: true
+    enabled: true
+    change-log: classpath:/db/changelog/db.changelog-master.xml
+    default-schema: public
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    generate-ddl: true
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  url:
+    place: "https://kudago.com/public-api/v1.4/locations"
+logging:
+  level:
+    root: INFO
