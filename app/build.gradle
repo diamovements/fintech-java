@@ -1,0 +1,73 @@
+plugins {
+    id 'application'
+    id 'jacoco'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(path: ':timing-starter')
+    testImplementation libs.junit
+    implementation libs.guava
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.1")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.0")
+    implementation("org.springframework.boot:spring-boot-starter-web:3.3.3")
+    implementation("org.springframework.boot:spring-boot-starter:3.3.3")
+    implementation("org.projectlombok:lombok:1.18.34")
+    implementation("org.slf4j:slf4j-api:2.0.7")
+    implementation('ch.qos.logback:logback-classic:1.4.11')
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor:3.3.3")
+    annotationProcessor("org.projectlombok:lombok:1.18.34")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.18.0-rc1")
+    testImplementation("org.mockito:mockito-core:5.14.0")
+    testImplementation("org.springframework.boot:spring-boot-test-autoconfigure:3.3.4")
+    testImplementation("org.springframework.boot:spring-boot-test:3.3.4")
+    implementation("com.jayway.jsonpath:json-path:2.9.0")
+    implementation("org.springframework:spring-jdbc:6.1.13")
+    testImplementation("com.github.tomakehurst:wiremock-jre8:2.35.0")
+    testImplementation("org.assertj:assertj-core:3.26.3")
+    testImplementation("org.testcontainers:junit-jupiter:1.18.0")
+    testImplementation ("org.testcontainers:testcontainers:1.18.3")
+    implementation("org.wiremock.integrations.testcontainers:wiremock-testcontainers-module:1.0-alpha-13")
+    implementation("io.projectreactor:reactor-core:3.6.10")
+    implementation("org.springframework.boot:spring-boot-starter-webflux:3.3.4")
+    testImplementation("org.skyscreamer:jsonassert:2.0-rc1")
+    testImplementation("io.projectreactor:reactor-test:3.6.10")
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(19)
+    }
+}
+
+application {
+    mainClass = 'org.example.App'
+}
+
+jacocoTestReport {
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                    'org/example/dao/**',
+                    'org/example/config/**',
+                    'org/example/entity/**',
+                    '**/App.*'
+            ])
+        }))
+    }
+}
+
+test {
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+allprojects {
+    repositories {
+        maven { url 'https://jitpack.io' }
+    }
+}
+
+

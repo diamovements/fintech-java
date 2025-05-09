@@ -1,0 +1,13 @@
+spring:
+  url:
+    category: "https://kudago.com/public-api/v1.4/place-categories"
+    location: "https://kudago.com/public-api/v1.4/locations"
+    event: "https://kudago.com/public-api/v1.4/events?fields=price,id,slug,title&order_by=favorites_count"
+    currency: "https://api.exchangerate-api.com/v4/latest"
+  concurrency:
+    max: 3
+    duration: PT10M
+    scheduled: 1
+logging:
+  level:
+    root: INFO

@@ -1,0 +1,17 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/public-api/v1.4/locations"
+      },
+      "response": {
+        "status": 200,
+        "body": "[{\"slug\":\"ekb\",\"name\":\"Екатеринбург\"},{\"slug\":\"kzn\",\"name\":\"Казань\"},{\"slug\":\"msk\",\"name\":\"Москва\"}]",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    }
+  ]
+}
