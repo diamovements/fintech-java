@@ -1,0 +1,19 @@
+spring:
+  cache:
+    type: caffeine
+    caffeine:
+      spec: expireAfterWrite=1h
+api:
+  currency-url: http://www.cbr.ru/scripts/XML_daily.asp?
+logging:
+  level:
+    root: info
+resilience4j:
+  circuitbreaker:
+    instances:
+      currencyService:
+        registerHealthIndicator: true
+        slidingWindowSize: 20
+        minimumNumberOfCalls: 10
+        failureRateThreshold: 80
+        waitDurationInOpenState: 10000
